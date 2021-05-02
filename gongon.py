@@ -42,21 +42,21 @@ async def on_ready():
     ctr = 0
     while True:
         try:
-        if ctr == 60*6:
-            await fs.updateGonciarzTime(gonciarzTimeChannel)
-            ctr = 0
+            if ctr == 60*6:
+                await fs.updateGonciarzTime(gonciarzTimeChannel)
+                ctr = 0
 
-        gonciarzStatus = gonciarzUser.presence.status
-        if gonciarzStatus == "online" and lastStatus != "online":
-            lastStatus = "online"
-            await fs.announceGonciarzOnline(welcomeChannel)
-        elif gonciarzStatus == "offline" and lastStatus != "offline":
-            lastStatus = "offline"
-            await fs.announceGonciarzOffline(welcomeChannel)
+            gonciarzStatus = gonciarzUser.raw_status
+            if gonciarzStatus == "online" and lastStatus != "online":
+                lastStatus = "online"
+                await fs.announceGonciarzOnline(welcomeChannel)
+            elif gonciarzStatus == "offline" and lastStatus != "offline":
+                lastStatus = "offline"
+                await fs.announceGonciarzOffline(welcomeChannel)
 
 
-        ctr+=1
-        await asyncio.sleep(1)
+            ctr+=1
+            await asyncio.sleep(1)
 
         except Exception as ex:
             print(str(ex))
