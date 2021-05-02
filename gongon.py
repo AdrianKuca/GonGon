@@ -6,7 +6,8 @@ from discord.ext import commands
 from random import randrange
 import funstuff as fs
 from time import time
-DEV = True
+from os import getenv
+DEV = getenv("DEBUG", 1) == 1
 
 if DEV == False:
     GUILD_ID = 702874201219924068
