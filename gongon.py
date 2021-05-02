@@ -41,6 +41,7 @@ async def on_ready():
     # Main loop every second.
     ctr = 0
     while True:
+        try:
         if ctr == 60*6:
             await fs.updateGonciarzTime(gonciarzTimeChannel)
             ctr = 0
@@ -56,6 +57,11 @@ async def on_ready():
 
         ctr+=1
         await asyncio.sleep(1)
+
+        except Exception as ex:
+            print(str(ex))
+            sleep(10)
+            
 
 lastFunMessage = 0
 @GonGon.event
