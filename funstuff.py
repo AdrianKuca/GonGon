@@ -36,7 +36,7 @@ def getResponseToGonciarz():
     response = [
         "UWAGA! TO NIE JEST PRAWDZIWY GONCIARZ, NIE SŁUCHAJCIE GO!",
         "Na tym serwerze nie ma miejsca na dwóch Gonciarzów, stawaj do walki.",
-        "Sam jestem Gonciarzem i wiem, że Gonciarz ma małego.",
+        "To ja jestem Gonciarzem!",
         "Fenek na prezydenta!",
         "Co to w ogóle znaczy być prawdziwym Gonciarzem..\nCzy ja jestem prawdziwy?..\nCzym jest prawdziwość?....",
     ]
