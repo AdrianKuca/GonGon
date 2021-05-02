@@ -21,6 +21,7 @@ else:
 
 intents = dc.Intents.default()
 intents.members = True
+intents.presences = True
 GonGon = commands.Bot(command_prefix='/', intents=intents)
 
 
