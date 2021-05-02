@@ -6,7 +6,8 @@ from discord.ext import commands
 from random import randrange
 import funstuff as fs
 from time import time
-DEV = True
+from os import getenv
+DEV = getenv("DEBUG", 1) == 1
 
 if DEV == False:
     GUILD_ID = 702874201219924068
@@ -21,6 +22,7 @@ else:
 
 intents = dc.Intents.default()
 intents.members = True
+intents.presences = True
 GonGon = commands.Bot(command_prefix='/', intents=intents)
 
 
@@ -39,21 +41,27 @@ async def on_ready():
     # Main loop every second.
     ctr = 0
     while True:
-        if ctr == 60*6:
-            await fs.updateGonciarzTime(gonciarzTimeChannel)
-            ctr = 0
+        try:
+            if ctr == 60*6:
+                await fs.updateGonciarzTime(gonciarzTimeChannel)
+                ctr = 0
 
-        gonciarzStatus = gonciarzUser.presence.status
-        if gonciarzStatus == "online" and lastStatus != "online":
-            lastStatus = "online"
-            await fs.announceGonciarzOnline(welcomeChannel)
-        elif gonciarzStatus == "offline" and lastStatus != "offline":
-            lastStatus = "offline"
-            await fs.announceGonciarzOffline(welcomeChannel)
+            gonciarzStatus = gonciarzUser.raw_status
+            if gonciarzStatus == "online" and lastStatus != "online":
+                lastStatus = "online"
+                await fs.announceGonciarzOnline(welcomeChannel)
+            elif gonciarzStatus == "offline" and lastStatus != "offline":
+                lastStatus = "offline"
+                await fs.announceGonciarzOffline(welcomeChannel)
 
 
-        ctr+=1
-        await asyncio.sleep(1)
+            ctr+=1
+            await asyncio.sleep(1)
+
+        except Exception as ex:
+            print(str(ex))
+            sleep(10)
+            
 
 lastFunMessage = 0
 @GonGon.event
