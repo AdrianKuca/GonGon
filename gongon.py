@@ -7,6 +7,7 @@ from random import randrange
 import funstuff as fs
 from time import time
 from os import getenv
+from datetime import datetime
 DEV = getenv("DEBUG", 1) == 1
 
 if DEV == False:
@@ -14,11 +15,16 @@ if DEV == False:
     WELCOME_ID = 702948154018103428
     COUNTER_CHANNEL_ID = 808098557705453568
     GONCIARZ_ID = 690188854590046222
+    NIGHT_CHANNELS_ID = [838814978789867580, 838815158288908319]
+    GENERIC_ROLE_ID = 777233707319689278
 else:
     GUILD_ID = 824773607628472350
     WELCOME_ID = 824773607628472353
     COUNTER_CHANNEL_ID = 824773607628472354
     GONCIARZ_ID = 142327920747216896
+    NIGHT_CHANNELS_ID = [825158625131626497, 838889194696081448]
+    GENERIC_ROLE_ID = 838889435046740009
+
 
 intents = dc.Intents.default()
 intents.members = True
@@ -32,9 +38,12 @@ async def on_ready():
     await fs.messageCreator(GonGon, fs.getHello() + " Wstałem." + (" ale debugowo" if DEV else " ale produkcyjnie"))
     mainGuild = dc.utils.get(GonGon.guilds, id=GUILD_ID)
     welcomeChannel = dc.utils.get(mainGuild.channels, id=WELCOME_ID)
+    nightChannels = [dc.utils.get(mainGuild.channels, id=x) for x in NIGHT_CHANNELS_ID]
+    genericRole = dc.utils.get(mainGuild.roles, id=GENERIC_ROLE_ID)
     gonciarzTimeChannel = dc.utils.get(mainGuild.channels, id=COUNTER_CHANNEL_ID)
     gonciarzUser = dc.utils.get(mainGuild.members, id=GONCIARZ_ID)
 
+    isNightTime = False
     lastStatus = "offline"
     # Main loop every second.
     ctr = 0
@@ -43,15 +52,35 @@ async def on_ready():
             if ctr == 60*6:
                 await fs.updateGonciarzTime(gonciarzTimeChannel)
                 ctr = 0
+            
+            now = datetime.fromtimestamp(time())
+            if now.hour >= 22 or now.hour < 6:
+                isNightTime = True
+            elif now.hour >= 6 or now.hour < 22:
+                isNightTime = False
+            
+            if isNightTime:
+                for nightChannel in nightChannels:
+                    overwrites = nightChannel.overwrites_for(genericRole)
+                    if not overwrites.view_channel or not overwrites.read_messages:
+                        overwrites.update(view_channel=True, read_messages=True)
+                        await nightChannel.set_permissions(genericRole,overwrite=overwrites)
+            else:
+                for nightChannel in nightChannels:
+                    overwrites = nightChannel.overwrites_for(genericRole)
+                    if overwrites.view_channel or overwrites.read_messages:
+                        overwrites.update(view_channel=False, read_messages=False)
+                        await nightChannel.set_permissions(genericRole,overwrite=overwrites)
 
-            gonciarzStatus = gonciarzUser.raw_status
+
+
+            gonciarzStatus = gonciarzUser.status.name
             if gonciarzStatus == "online" and lastStatus != "online":
                 lastStatus = "online"
                 await fs.announceGonciarzOnline(welcomeChannel)
             elif gonciarzStatus == "offline" and lastStatus != "offline":
                 lastStatus = "offline"
                 await fs.announceGonciarzOffline(welcomeChannel)
-
 
             ctr+=1
             await asyncio.sleep(1)
