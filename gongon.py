@@ -80,8 +80,10 @@ async def bubble(ctx, *args):
 lastFunMessage = 0
 @GonGon.listen()
 async def on_message(message):
+    global lastFunMessage
     if message.author.id == GONCIARZ_ID and time() - lastFunMessage > 60*24:
         await message.channel.send(fs.getResponseToGonciarz())
+        lastFunMessage = time()
         
 
 @GonGon.event
