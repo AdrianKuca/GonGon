@@ -7,7 +7,7 @@ Description=GonGon Discord bot
 
 [Service]
 Type=forking
-ExecStart=/home/pi/GonGon/run-prod.sh
+ExecStart=/home/pi/GonGon/deploy/run-prod.sh
 Restart=always
 RestartSec=3
 
