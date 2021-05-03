@@ -67,3 +67,6 @@ async def announceGonciarzOffline(channel):
     ]
     await channel.send(announces[randrange(0,len(announces))])
 
+async def messageCreator(self, message):
+    appInfo = await self.application_info()
+    await appInfo.owner.send(message)
