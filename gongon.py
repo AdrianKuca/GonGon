@@ -29,7 +29,7 @@ GonGon = commands.Bot(command_prefix='/', intents=intents)
 @GonGon.event
 async def on_ready():
     '''Say hello when waking up.'''
-    await fs.messageCreator(GonGon, fs.getHello() + " Wstałem.")
+    await fs.messageCreator(GonGon, fs.getHello() + " Wstałem." + (" ale debugowo" if DEV else " ale produkcyjnie"))
     mainGuild = dc.utils.get(GonGon.guilds, id=GUILD_ID)
     welcomeChannel = dc.utils.get(mainGuild.channels, id=WELCOME_ID)
     gonciarzTimeChannel = dc.utils.get(mainGuild.channels, id=COUNTER_CHANNEL_ID)
