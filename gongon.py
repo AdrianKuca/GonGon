@@ -57,7 +57,7 @@ async def on_ready():
             await asyncio.sleep(1)
 
         except Exception as ex:
-            fs.messageCreator(GonGon, fs.getGoodbye() + " Wyjebałem się, pomuż.\n" + str(ex))
+            fs.messageCreator(GonGon,"Aaaa ratunku! Wyjebałem się, pomuż...\n" + str(ex))
             print("There's been a catastrophy:", str(ex))
             await asyncio.sleep(600)
             
