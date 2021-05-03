@@ -59,12 +59,24 @@ async def on_ready():
             await asyncio.sleep(1)
 
         except Exception as ex:
-            print(str(ex))
-            sleep(10)
+@GonGon.command(
+    name="czy", 
+    help='Zadaj pytanie a przeznaczenie odpowie! Przykład: /czy kuca jest głupi'
+)
+async def eightBall(ctx, *args):
+    answer = fs.getAnswer()
+    await ctx.reply(answer)
             
+@GonGon.command(
+    name="bombel"
+)
+async def bubble(ctx, *args):
+    sideSize = 9
+    message = (("||pop||"*sideSize)+"\n")*sideSize
+    await ctx.send(message)
 
 lastFunMessage = 0
-@GonGon.event
+@GonGon.listen()
 async def on_message(message):
     if message.author.id == GONCIARZ_ID and time() - lastFunMessage > 60*24:
         await message.channel.send(fs.getResponseToGonciarz())
