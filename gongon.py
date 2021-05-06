@@ -12,7 +12,7 @@ DEV = getenv("DEBUG", 1) == 1
 
 if DEV == False:
     GUILD_ID = 702874201219924068
-    WELCOME_ID = 702948154018103428
+    WELCOME_ID = 702948154018103428 
     COUNTER_CHANNEL_ID = 808098557705453568
     GONCIARZ_ID = 690188854590046222
     NIGHT_CHANNELS_ID = [838814978789867580, 838815158288908319, 838815290909261846, 838815347725041714, 838815629984268338, 838815746229534751]
@@ -22,7 +22,7 @@ else:
     WELCOME_ID = 824773607628472353
     COUNTER_CHANNEL_ID = 824773607628472354
     GONCIARZ_ID = 142327920747216896
-    NIGHT_CHANNELS_ID = [825158625131626497, 838889194696081448]
+    NIGHT_CHANNELS_ID = [825158625131626497, 838889194696081448, 839959183926886410]
     GENERIC_ROLE_ID = 838889435046740009
 
 
@@ -86,7 +86,7 @@ async def on_ready():
             await asyncio.sleep(1)
 
         except Exception as ex:
-            fs.messageCreator(GonGon,"Aaaa ratunku! Wyjebałem się, pomuż...\n" + str(ex))
+            await fs.messageCreator(GonGon,"Aaaa ratunku! Wyjebałem się, pomuż...\n" + str(ex))
             print("There's been a catastrophy:", str(ex))
             await asyncio.sleep(600)
             
