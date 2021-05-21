@@ -1,18 +1,10 @@
 from random import randrange
 from datetime import datetime
 
-helloes = ["Hej!", "Cześć!", "Dzień dobry!", "Uszanowanko! (wow)"]
-
-answers = [
-    "Tak", "Nie", "Może", "Nie wiem :c",
-    "Oczywiście, że tak", "Oczywiście, że nie", "Jeden rabin powie tak, drugi rabin powie nie", "Zarobiony jestem, zapytaj ponownie innym razem",
-    "Oj tak", "Nie sądzę", "Kto wie?", "Nie zawracaj mi teraz głowy",
-    "Mhm", "Nie-e", "I tak, i nie", "Głupie pytanie.",
-]
-
-
 def getHello():
+    helloes = ["Hej!", "Cześć!", "Dzień dobry!", "Uszanowanko! (wow)"]
     return helloes[randrange(0, len(helloes))]
+
 
 def getWelcome(memberName, population):
     hello = getHello()
@@ -43,6 +35,12 @@ def getResponseToGonciarz():
     return response[randrange(0,len(response))]
     
 def getAnswer():
+    answers = [
+        "Tak", "Nie", "Może", "Nie wiem :c",
+        "Oczywiście, że tak", "Oczywiście, że nie", "Jeden rabin powie tak, drugi rabin powie nie", "Zarobiony jestem, zapytaj ponownie innym razem",
+        "Oj tak", "Nie sądzę", "Kto wie?", "Nie zawracaj mi teraz głowy",
+        "Mhm", "Nie-e", "I tak, i nie", "Głupie pytanie.",
+    ]
     return answers[randrange(0,len(answers))]
 
 async def updateGonciarzTime(channel):
