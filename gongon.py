@@ -17,6 +17,7 @@ if DEV == False:
     GONCIARZ_ID = 690188854590046222
     NIGHT_CHANNELS_ID = [838814978789867580, 838815158288908319, 838815290909261846, 838815347725041714, 838815629984268338, 838815746229534751]
     GENERIC_ROLE_ID = 777233707319689278
+    NIGHT_ROLE_ID = 838813946097565788
 else:
     GUILD_ID = 824773607628472350
     WELCOME_ID = 824773607628472353
@@ -24,6 +25,7 @@ else:
     GONCIARZ_ID = 142327920747216896
     NIGHT_CHANNELS_ID = [825158625131626497, 838889194696081448, 839959183926886410]
     GENERIC_ROLE_ID = 838889435046740009
+    NIGHT_ROLE_ID = 838889435046740009
 
 
 intents = dc.Intents.default()
@@ -40,10 +42,14 @@ async def on_ready():
     welcomeChannel = dc.utils.get(mainGuild.channels, id=WELCOME_ID)
     nightChannels = [dc.utils.get(mainGuild.channels, id=x) for x in NIGHT_CHANNELS_ID]
     genericRole = dc.utils.get(mainGuild.roles, id=GENERIC_ROLE_ID)
+    nightRole = dc.utils.get(mainGuild.roles, id=NIGHT_ROLE_ID)
     gonciarzTimeChannel = dc.utils.get(mainGuild.channels, id=COUNTER_CHANNEL_ID)
     gonciarzUser = dc.utils.get(mainGuild.members, id=GONCIARZ_ID)
 
     isNightTime = False
+
+    middleTimePassed = False
+    tenMinutesTillDuskPassed = False
     lastStatus = "offline"
     # Main loop every second.
     ctr = 0
@@ -58,19 +64,39 @@ async def on_ready():
                 isNightTime = True
             elif now.hour >= 6 or now.hour < 22:
                 isNightTime = False
-            
+
             if isNightTime:
                 for nightChannel in nightChannels:
-                    overwrites = nightChannel.overwrites_for(genericRole)
+                    # Show the night channels for the night role.
+                    overwrites = nightChannel.overwrites_for(nightRole)
                     if not overwrites.view_channel or not overwrites.read_messages:
                         overwrites.update(view_channel=True, read_messages=True)
-                        await nightChannel.set_permissions(genericRole,overwrite=overwrites)
+                        await nightChannel.set_permissions(nightRole, overwrite=overwrites)
+                        await fs.announceNightTimeBegin(nightChannel)
+
+                    if now.hour == 2 and not middleTimePassed:
+                        await fs.announceNightTimeMiddle(nightChannel)
+                        middleTimePassed = True
+
+                    elif now.hour == 5 and now.minute == 50 and not tenMinutesTillDuskPassed:
+                        await fs.announceNightTimeEnd(nightChannel)
+                        tenMinutesTillDuskPassed = True
+
             else:
                 for nightChannel in nightChannels:
-                    overwrites = nightChannel.overwrites_for(genericRole)
+                    # Unshow the channels.
+                    overwrites = nightChannel.overwrites_for(nightRole)
                     if overwrites.view_channel or overwrites.read_messages:
                         overwrites.update(view_channel=False, read_messages=False)
-                        await nightChannel.set_permissions(genericRole,overwrite=overwrites)
+                        await nightChannel.set_permissions(nightRole, overwrite=overwrites)
+                        # Purge messages on the text channels.
+                        try:
+                            messages =  await nightChannel.history(limit=100).flatten()
+                            while len(messages):
+                                messages =  await nightChannel.history(limit=100).flatten()
+                                await nightChannel.purge()
+                        except:
+                            pass
 
 
 
