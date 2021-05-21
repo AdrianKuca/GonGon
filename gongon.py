@@ -72,15 +72,17 @@ async def on_ready():
                     if not overwrites.view_channel or not overwrites.read_messages:
                         overwrites.update(view_channel=True, read_messages=True)
                         await nightChannel.set_permissions(nightRole, overwrite=overwrites)
-                        await fs.announceNightTimeBegin(nightChannel)
+                        if nightChannel.type == dc.ChannelType.text:
+                            await fs.announceNightTimeBegin(nightChannel)
+                    
+                    if nightChannel.type == dc.ChannelType.text:
+                        if now.hour == 2 and not middleTimePassed:
+                            await fs.announceNightTimeMiddle(nightChannel)
+                            middleTimePassed = True
 
-                    if now.hour == 2 and not middleTimePassed:
-                        await fs.announceNightTimeMiddle(nightChannel)
-                        middleTimePassed = True
-
-                    elif now.hour == 5 and now.minute == 50 and not tenMinutesTillDuskPassed:
-                        await fs.announceNightTimeEnd(nightChannel)
-                        tenMinutesTillDuskPassed = True
+                        elif now.hour == 5 and now.minute == 50 and not tenMinutesTillDuskPassed:
+                            await fs.announceNightTimeEnd(nightChannel)
+                            tenMinutesTillDuskPassed = True
 
             else:
                 for nightChannel in nightChannels:
@@ -90,13 +92,11 @@ async def on_ready():
                         overwrites.update(view_channel=False, read_messages=False)
                         await nightChannel.set_permissions(nightRole, overwrite=overwrites)
                         # Purge messages on the text channels.
-                        try:
+                        if nightChannel.type == dc.ChannelType.text:
                             messages =  await nightChannel.history(limit=100).flatten()
                             while len(messages):
                                 messages =  await nightChannel.history(limit=100).flatten()
                                 await nightChannel.purge()
-                        except:
-                            pass
 
 
 
