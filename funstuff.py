@@ -51,6 +51,35 @@ async def updateGonciarzTime(channel):
     delta = now-gonciarzTime
     await channel.edit(name=f"{delta.days}d, {delta.seconds//3600}h, {(delta.seconds%3600)//60}m")
 
+# Night time announcments.
+
+async def announceNightTimeBegin(channel):
+    announces = [
+        "Nastała noc...",
+        "Ciemno wszędzie, głucho wszędzie, co to będzie? Co to będzie?",
+        "Zapadł zmrok.",
+        "Zapraszam na nocną!"
+    ]
+    await channel.send(announces[randrange(0,len(announces))])
+
+async def announceNightTimeMiddle(channel):
+    announces = [
+        "2:00 - nocna trwa w najlepsze.",
+        "Wybiła druga, połowa nocnej za nami.",
+        "*świerszcze*",
+    ]
+    await channel.send(announces[randrange(0,len(announces))])
+
+async def announceNightTimeEnd(channel):
+    announces = [
+        "Za dziesięć minut zamykam nocną.",
+        "Uwaga! Nocna zostanie zamknięta za dziesięć minut!",
+        "Do wszystkich uczestników: Nocna dobiega końca! Za dziesięć minut nie zostanie po niej ślad!",
+    ]
+    await channel.send(announces[randrange(0,len(announces))])
+
+# Gonciarz announcments.
+
 async def announceGonciarzOnline(channel):
     announces = [
         "GONCIARZ PRZYSZEDŁ, CHOWAĆ SIĘ!",
