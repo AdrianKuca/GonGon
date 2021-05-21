@@ -130,4 +130,4 @@ async def on_member_remove(member):
     welcomeChannel = dc.utils.get(mainGuild.channels, id=WELCOME_ID)
 
     memberCount = len([m for m in mainGuild.members if not m.bot])
-    await welcomeChannel.send(fs.getGoodbye(member.mention, memberCount))
+    await welcomeChannel.send(fs.getGoodbye(member.name, memberCount))
