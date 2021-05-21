@@ -136,7 +136,8 @@ lastFunMessage = 0
 @GonGon.listen()
 async def on_message(message):
     global lastFunMessage
-    if message.author.id == GONCIARZ_ID and time() - lastFunMessage > 60*24:
+    if message.guild == dc.utils.get(GonGon.guilds, id=GUILD_ID) \
+        and message.author.id == GONCIARZ_ID and time() - lastFunMessage > 60*24:
         await message.channel.send(fs.getResponseToGonciarz())
         lastFunMessage = time()
         
@@ -144,7 +145,7 @@ async def on_message(message):
 @GonGon.event
 async def on_member_join(member):
     '''Welcome people when they join the server.'''
-    mainGuild = dc.utils.get(GonGon.guilds, id=GUILD_ID)
+    mainGuild = member.guild
     welcomeChannel = dc.utils.get(mainGuild.channels, id=WELCOME_ID)
 
     memberCount = len([m for m in mainGuild.members if not m.bot])
@@ -152,7 +153,7 @@ async def on_member_join(member):
 
 @GonGon.event
 async def on_member_remove(member):
-    mainGuild = dc.utils.get(GonGon.guilds, id=GUILD_ID)
+    mainGuild = member.guild
     welcomeChannel = dc.utils.get(mainGuild.channels, id=WELCOME_ID)
 
     memberCount = len([m for m in mainGuild.members if not m.bot])
