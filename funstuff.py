@@ -45,7 +45,7 @@ def getAnswer():
 
 async def updateGonciarzTime(channel):
     now = datetime.now()
-    gonciarzTime = datetime.fromtimestamp(1590344553)
+    gonciarzTime = datetime.fromtimestamp(1621883439)
     delta = now-gonciarzTime
     await channel.edit(name=f"{delta.days}d, {delta.seconds//3600}h, {(delta.seconds%3600)//60}m")
 
