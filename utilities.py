@@ -49,40 +49,21 @@ class Utilities:
         ]
         return answers[randrange(0, len(answers))]
 
-    async def updateGonciarzTime(self, channel):
+    async def updateGonciarzTime(self):
         now = datetime.now()
         gonciarzTime = datetime.fromtimestamp(1621883439)
         delta = now-gonciarzTime
-        await channel.edit(name=f"{delta.days}d, {delta.seconds//3600}h, {(delta.seconds%3600)//60}m")
+        await self.gonciarzTimeChannel.edit(name=f"{delta.days}d, {delta.seconds//3600}h, {(delta.seconds%3600)//60}m")
 
-    # Night time announcments.
-
-    async def announceNightTimeBegin(self, channel):
-        announces = [
-            "Nastała noc...",
-            "Ciemno wszędzie, głucho wszędzie, co to będzie? Co to będzie?",
-            "Zapadł zmrok.",
-            "Zapraszam na nocną!"
-        ]
-        await channel.send(announces[randrange(0, len(announces))])
-
-    async def announceNightTimeMiddle(self, channel):
-        announces = [
-            "2:00 - nocna trwa w najlepsze.",
-            "Wybiła druga, połowa nocnej za nami.",
-            "*świerszcze*",
-        ]
-        await channel.send(announces[randrange(0, len(announces))])
-
-    async def announceNightTimeEnd(self, channel):
-        announces = [
-            "Za dziesięć minut zamykam nocną.",
-            "Uwaga! Nocna zostanie zamknięta za dziesięć minut!",
-            "Do wszystkich uczestników: Nocna dobiega końca! Za dziesięć minut nie zostanie po niej ślad!",
-        ]
-        await channel.send(announces[randrange(0, len(announces))])
-
-    # Gonciarz announcments.
+    # region GONCIARZ ANNOUNCEMENTS
+    async def checkOnGonciarzStatus(self):
+        gonciarzStatus = self.gonciarzUser.status.name
+        if gonciarzStatus == "online" and self.lastStatus != "online":
+            self.lastStatus = "online"
+            await self.announceGonciarzOnline(self.welcomeChannel)
+        elif gonciarzStatus == "offline" and self.lastStatus != "offline":
+            self.lastStatus = "offline"
+            await self.announceGonciarzOffline(self.welcomeChannel)
 
     async def announceGonciarzOnline(self, channel):
         announces = [
@@ -99,3 +80,4 @@ class Utilities:
             "Wszystko co dobre kiedyś się kończy, no i właśnie się to skończyło. Gonciarz sobie znów poszedł.",
         ]
         await channel.send(announces[randrange(0, len(announces))])
+    # endregion GONCIARZ ANNOUNCEMENTS
