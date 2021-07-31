@@ -36,7 +36,7 @@ class GonGon(utilities.Utilities, nighsthift.NightShiftUtilities, timeloop.TimeL
         self.nightChannels = [dc.utils.get(self.mainGuild.channels, id=x)
                               for x in phonebook.NIGHT_CHANNELS_ID]
         self.movieChannel = dc.utils.get(
-            self.mainGuild.channels, id=phonebook.WELCOME_ID)
+            self.mainGuild.channels, id=phonebook.MOVIE_CHANNEL)
         self.nightCategory = dc.utils.get(
             self.mainGuild.categories, id=phonebook.NIGHT_CATEGORY_ID)
         self.genericRole = dc.utils.get(
