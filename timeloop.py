@@ -2,6 +2,7 @@ import asyncio
 import os
 from datetime import date, datetime, timedelta
 from time import time
+from threading import Lock
 
 
 class Event:
@@ -9,11 +10,14 @@ class Event:
         self.handler = handler
         self.args = args
         self.lastRunTime = datetime.now() - timedelta(minutes=2)
+        self.lock = Lock()
 
     async def run(self):
+        self.lock.acquire()
         if datetime.now() > self.lastRunTime + timedelta(minutes=1):
             await self.handler(*self.args)
             self.lastRunTime = datetime.now()
+        self.lock.release()
 
 
 class CyclicEvent(Event):
