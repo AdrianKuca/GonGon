@@ -60,6 +60,3 @@ class NightShiftUtilities:
         for nightChannel in self.nightCategory.channels:
             if nightChannel.type == dc.ChannelType.text:
                 await nightChannel.send(announces[randrange(0, len(announces))])
-
-    async def announceOnMovieChannel(self):
-        await self.movieChannel.send("https://docs.google.com/document/d/1NeRolXNt19YMgjwjJExe3c6FrrHCaYH4SK8zGiy7xXg/edit?usp=sharing")

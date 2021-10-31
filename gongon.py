@@ -62,8 +62,6 @@ class GonGon(utilities.Utilities, nighsthift.NightShiftUtilities, timeloop.TimeL
         self.registerOnTimeEvent(
             self.nightTimeStartHour, self.nightTimeStartMinute, self.announceNightTimeBegin)
         self.registerOnTimeEvent(
-            self.nightTimeStartHour, self.nightTimeStartMinute, self.announceOnMovieChannel)
-        self.registerOnTimeEvent(
             2, 00, self.announceNightTimeMiddle)
         self.registerOnTimeEvent(
             5, 50, self.announceNightTimeEnd)
