@@ -102,11 +102,6 @@ class GonGon(utilities.Utilities, nighsthift.NightShiftUtilities, timeloop.TimeL
         '''Welcome people when they join the server.'''
         memberCount = len([m for m in self.mainGuild.members if not m.bot])
         await self.welcomeChannel.send(self.getWelcome(member.mention, memberCount))
-
-    async def on_member_remove(self, member):
-        '''Announce someone leaving the server.'''
-        memberCount = len([m for m in self.mainGuild.members if not m.bot])
-        await self.welcomeChannel.send(self.getGoodbye(member.name, memberCount))
     # endregion EVENTS
 
     # region COMMANDS
