@@ -42,24 +42,40 @@ class Utilities:
 
     def getAnswer(self):
         answers = [
-            "Tak", "Nie", "Może", "Nie wiem :c",
-            "Oczywiście, że tak", "Oczywiście, że nie", "Jeden rabin powie tak, drugi rabin powie nie", "Zarobiony jestem, zapytaj ponownie innym razem",
-            "Oj tak", "Nie sądzę", "Kto wie?", "Nie zawracaj mi teraz głowy",
-            "Mhm", "Nie-e", "I tak, i nie", "Głupie pytanie.",
+            "Tak",
+            "Nie",
+            "Może",
+            "Nie wiem :c",
+            "Oczywiście, że tak",
+            "Oczywiście, że nie",
+            "Jeden rabin powie tak, drugi rabin powie nie",
+            "Zarobiony jestem, zapytaj ponownie innym razem",
+            "Oj tak",
+            "Nie sądzę",
+            "Kto wie?",
+            "Nie zawracaj mi teraz głowy",
+            "Mhm",
+            "Nie-e",
+            "I tak, i nie",
+            "Głupie pytanie.",
         ]
         return answers[randrange(0, len(answers))]
 
     async def updateGonciarzTime(self):
         now = datetime.now()
         gonciarzTime = datetime.fromtimestamp(1621883439)
-        delta = now-gonciarzTime
-        await self.gonciarzTimeChannel.edit(name=f"{delta.days}d, {delta.seconds//3600}h, {(delta.seconds%3600)//60}m")
+        delta = now - gonciarzTime
+        await self.gonciarzTimeChannel.edit(
+            name=f"{delta.days}d, {delta.seconds//3600}h, {(delta.seconds%3600)//60}m"
+        )
 
     async def updateMayTime(self):
         now = datetime.now()
         mayTime = datetime.fromtimestamp(1653420263)
-        delta = now-mayTime
-        await self.mayTimeChannel.edit(name=f"{delta.days}d, {delta.seconds//3600}h, {(delta.seconds%3600)//60}m")
+        delta = now - mayTime
+        await self.mayTimeChannel.edit(
+            name=f"{abs(delta.days)}d, {delta.seconds//3600}h, {(delta.seconds%3600)//60}m"
+        )
 
     # region GONCIARZ ANNOUNCEMENTS
     async def checkOnGonciarzStatus(self):
@@ -86,4 +102,5 @@ class Utilities:
             "Wszystko co dobre kiedyś się kończy, no i właśnie się to skończyło. Gonciarz sobie znów poszedł.",
         ]
         await channel.send(announces[randrange(0, len(announces))])
+
     # endregion GONCIARZ ANNOUNCEMENTS
