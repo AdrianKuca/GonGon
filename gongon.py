@@ -46,7 +46,7 @@ class GonGon(utilities.Utilities, nighsthift.NightShiftUtilities, timeloop.TimeL
         self.gonciarzTimeChannel = dc.utils.get(
             self.mainGuild.channels, id=phonebook.COUNTER_CHANNEL_ID)
         self.mayTimeChannel = dc.utils.get(
-            self.mainGuild.channels, id=phonebook.COUNTER_CHANNEL_ID)
+            self.mainGuild.channels, id=phonebook.COUNTER_CHANNEL2_ID)
         self.gonciarzUser = dc.utils.get(
             self.mainGuild.members, id=phonebook.GONCIARZ_ID)
         # endregion IDS
