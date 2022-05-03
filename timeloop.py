@@ -26,7 +26,7 @@ class CyclicEvent(Event):
         self.seconds = seconds
 
     def isTime(self, ctr):
-        return ctr % self.seconds == 0
+        return int(ctr) % self.seconds < 3
 
 
 class OnTimeEvent(Event):
@@ -73,6 +73,8 @@ class TimeLoop:
                 errorCounter += 1
                 if errorCounter == 3:
                     os.system("sudo reboot")
-                await self.messageCreator("Aaaa ratunku! Wyjebałem się, pomuż...\n" + str(ex))
+                await self.messageCreator(
+                    "Aaaa ratunku! Wyjebałem się, pomuż...\n" + str(ex)
+                )
                 print("There's been a catastrophy:", str(ex))
-                await asyncio.sleep(60*10)
+                await asyncio.sleep(60 * 10)
