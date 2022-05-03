@@ -45,6 +45,8 @@ class GonGon(utilities.Utilities, nighsthift.NightShiftUtilities, timeloop.TimeL
             self.mainGuild.roles, id=phonebook.NIGHT_ROLE_ID)
         self.gonciarzTimeChannel = dc.utils.get(
             self.mainGuild.channels, id=phonebook.COUNTER_CHANNEL_ID)
+        self.mayTimeChannel = dc.utils.get(
+            self.mainGuild.channels, id=phonebook.COUNTER_CHANNEL_ID)
         self.gonciarzUser = dc.utils.get(
             self.mainGuild.members, id=phonebook.GONCIARZ_ID)
         # endregion IDS
@@ -57,6 +59,7 @@ class GonGon(utilities.Utilities, nighsthift.NightShiftUtilities, timeloop.TimeL
         # endregion STATE
         # region TIMELOOP EVENTS
         self.registerCyclicEvent(60*6, self.updateGonciarzTime)
+        self.registerCyclicEvent(60*6, self.updateMayTime)
         self.registerOnTimeEvent(
             self.nightTimeStartHour, self.nightTimeStartMinute, self.openNightShift)
         self.registerOnTimeEvent(

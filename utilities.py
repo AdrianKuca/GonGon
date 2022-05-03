@@ -55,6 +55,12 @@ class Utilities:
         delta = now-gonciarzTime
         await self.gonciarzTimeChannel.edit(name=f"{delta.days}d, {delta.seconds//3600}h, {(delta.seconds%3600)//60}m")
 
+    async def updateMayTime(self):
+        now = datetime.now()
+        mayTime = datetime.fromtimestamp(1653420263)
+        delta = now-mayTime
+        await self.mayTimeChannel.edit(name=f"{delta.days}d, {delta.seconds//3600}h, {(delta.seconds%3600)//60}m")
+
     # region GONCIARZ ANNOUNCEMENTS
     async def checkOnGonciarzStatus(self):
         gonciarzStatus = self.gonciarzUser.status.name
