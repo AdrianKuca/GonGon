@@ -72,7 +72,7 @@ class TimeLoop:
             except Exception as ex:
                 errorCounter += 1
                 if errorCounter == 3:
-                    os.system("sudo systemctl restart gongon")
+                    os.system("sudo reboot")
                 await self.messageCreator("Aaaa ratunku! Wyjebałem się, pomuż...\n" + str(ex))
                 print("There's been a catastrophy:", str(ex))
                 await asyncio.sleep(60*10)
