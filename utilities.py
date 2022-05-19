@@ -71,7 +71,7 @@ class Utilities:
 
     async def updateMayTime(self):
         now = datetime.now()
-        mayTime = datetime.fromtimestamp(1653420263 - 3600 * 2)
+        mayTime = datetime.fromtimestamp(1653420263 - 3600 * 24 * 2 - 3600 * 2)
         delta = now - mayTime
         await self.mayTimeChannel.edit(
             name=f"{abs(delta.days)}d, {delta.seconds//3600}h, {(delta.seconds%3600)//60}m"
